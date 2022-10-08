@@ -19,8 +19,12 @@ class ApplicationController < ActionController::API
      render json: {}, status: :ok
   end
 
+  def current_user_session
+    AuthToken.where.not(token: nil).find_by_token(bearer_token)
+  end
+  
   def current_user
-    @current_user ||= AuthToken.where.not(token: nil).find_by_token(bearer_token)&.user
+    @current_user ||= current_user_session&.user
   end
 
   private
