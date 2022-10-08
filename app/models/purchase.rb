@@ -9,6 +9,7 @@ class Purchase < ApplicationRecord
   ## CALLBACKS ##
   before_validation :set_amount
   validate :check_user_balance
+  validate :check_product_stock
   after_save :update_product_stock
   after_save :update_user_balance
 
@@ -22,6 +23,13 @@ class Purchase < ApplicationRecord
   def check_user_balance
     if amount > user.deposit
       self.errors.add(:user, 'Insufficient balance.')
+      return false
+    end
+  end
+
+  def check_product_stock
+    if quantity > product.amount_available
+      self.errors.add(:product, 'Insufficient products in stock.')
       return false
     end
   end
