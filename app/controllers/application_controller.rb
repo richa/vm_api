@@ -7,6 +7,10 @@ class ApplicationController < ActionController::API
     render json: { errors: { base: 'Unauthorized' } }, status: :unauthorized
   end
 
+  def render_not_found
+    render json: { errors: { base: 'Record not found' } }, status: :not_found
+  end
+
   def render_ok
      render json: {}, status: :ok
   end
@@ -18,6 +22,10 @@ class ApplicationController < ActionController::API
   private
   def check_if_logged_in
     render_unauthorized unless current_user
+  end
+
+  def check_if_seller
+    render_unauthorized unless current_user.is_seller?
   end
 
   def bearer_token

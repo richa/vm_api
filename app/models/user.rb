@@ -27,4 +27,8 @@ class User < ApplicationRecord
     end
   end
 
+  def is_seller?
+    role == 'seller'
+  end
+
 end
