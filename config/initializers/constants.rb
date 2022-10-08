@@ -1,1 +1,1 @@
-EMAIL_REGEX = /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
+ALLOWED_DEPOSIT_VALUES = [100, 50, 20, 10, 5]

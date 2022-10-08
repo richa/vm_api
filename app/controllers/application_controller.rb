@@ -11,6 +11,10 @@ class ApplicationController < ActionController::API
     render json: { errors: { base: 'Record not found' } }, status: :not_found
   end
 
+  def render_custom_error(msg)
+    render json: { errors: { base: msg } }, status: :unprocessable_entity
+  end
+
   def render_ok
      render json: {}, status: :ok
   end
@@ -25,7 +29,11 @@ class ApplicationController < ActionController::API
   end
 
   def check_if_seller
-    render_unauthorized unless current_user.is_seller?
+    render_unauthorized unless current_user.seller?
+  end
+
+  def check_if_buyer
+    render_unauthorized unless current_user.buyer?
   end
 
   def bearer_token

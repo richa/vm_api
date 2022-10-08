@@ -5,4 +5,5 @@ class Product < ApplicationRecord
 
   ## ASSOCIATIONS ##
   belongs_to :seller, class_name: 'User'
+  has_many :purchases
 end

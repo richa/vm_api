@@ -13,6 +13,7 @@ class User < ApplicationRecord
   ## ASSOCIATIONS ##
   has_many :auth_tokens
   has_many :products, foreign_key: :seller_id
+  has_many :purchases
 
   ## INSTANCE METHODS ##
   def verify_password(pwd)
@@ -27,8 +28,28 @@ class User < ApplicationRecord
     end
   end
 
-  def is_seller?
-    role == 'seller'
+  def deposit_amount(amount)
+    amount = amount.to_i
+    return false unless ALLOWED_DEPOSIT_VALUES.include?(amount)
+
+    self.update_attribute(:deposit, deposit+amount)
   end
 
+  def balance
+    hash = { total: deposit }
+    current_deposit = deposit
+
+    ALLOWED_DEPOSIT_VALUES.each do |coin|
+      value = current_deposit/coin
+      hash[coin] = value
+
+      current_deposit = current_deposit%coin
+
+      if ALLOWED_DEPOSIT_VALUES.last == coin
+        hash[:unconverted] = current_deposit
+      end
+    end
+
+    hash
+  end
 end

@@ -12,6 +12,10 @@ Rails.application.routes.draw do
         end
       end
 
+      patch 'deposit', to: 'accounts#deposit'
+      delete 'reset', to: 'accounts#reset'
+
+      post 'buy', to: 'purchases#create'
     end
   end
 end
