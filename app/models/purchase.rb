@@ -1,6 +1,7 @@
 class Purchase < ApplicationRecord
   ## VALIDATIONS ##
   validates :user, :product, :quantity, :amount, presence: true
+  validates :quantity, numericality: { greater_than: 0, allow_blank: true }
 
   ## ASSOCIATIONS ##
   belongs_to :product
