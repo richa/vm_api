@@ -2,7 +2,8 @@ class Api::V1::UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      render json: user, status: :created, serializer: UserSerializer
+      token = user.verify_password(user_params[:password])
+      render json: { user: UserSerializer.new(user), token: token }, status: :created
     else
       render_error_response(user)
     end

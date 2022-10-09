@@ -1,9 +1,9 @@
 class PurchaseSerializer < ActiveModel::Serializer
-  attributes :id, :amount, :user_balance
+  attributes :id, :amount, :balance
 
   belongs_to :product, serializer: ProductSerializer
 
-  def user_balance
+  def balance
     object.user.balance
   end
 end

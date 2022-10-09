@@ -44,10 +44,6 @@ class User < ApplicationRecord
       hash[coin] = value
 
       current_deposit = current_deposit%coin
-
-      if ALLOWED_DEPOSIT_VALUES.last == coin
-        hash[:unconverted] = current_deposit
-      end
     end
 
     hash

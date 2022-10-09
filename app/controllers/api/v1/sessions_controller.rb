@@ -2,15 +2,20 @@ class Api::V1::SessionsController < ApplicationController
   before_action :check_if_logged_in, except: [:create]
 
   def create
-    @user = User.find_by_username(params[:username])
-    if token = @user && @user.verify_password(params[:password])
+    user = User.find_by_username(params[:username])
+    if token = user && user.verify_password(params[:password])
       render json: {
         token: token,
-        active_sessions: @user.auth_tokens.count
+        active_sessions: user.auth_tokens.count,
+        user: UserSerializer.new(user)
       }, status: :ok
     else
       render_unauthorized
     end
+  end
+
+  def current
+    render json: current_user, serializer: UserSerializer
   end
 
   def destroy

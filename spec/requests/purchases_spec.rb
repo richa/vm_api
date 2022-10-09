@@ -17,7 +17,7 @@ RSpec.describe "Purchases", type: :request do
       res = JSON.parse(response.body)
 
       expect(response).to have_http_status(201)
-      expect(res['user_balance']['total']).to eq(100)
+      expect(res['balance']['total']).to eq(100)
       expect(res['product']['amount_available']).to eq(1)
       expect(Purchase.count).to eq(old_purchase_count+1)
     end

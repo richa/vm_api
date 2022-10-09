@@ -1,14 +1,14 @@
 class Api::V1::ProductsController < ApplicationController
   before_action :check_if_logged_in
-  before_action :check_if_seller, except: [:list, :show]
+  before_action :check_if_seller, except: [:index, :show]
   before_action :load_product, only: [:show, :update, :destroy]
 
   def list
-    render json: Product.all, each_serializer: ProductSerializer
+    render json: product_scope.all, each_serializer: ProductSerializer
   end
 
   def index
-    render json: product_scope.all, each_serializer: ProductSerializer
+    render json: Product.all, each_serializer: ProductSerializer
   end
 
   def create
