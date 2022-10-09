@@ -16,3 +16,8 @@ rake db:seed
 Login as seller:
 
 JaneSeller / q123q123
+
+
+Run test cases:
+
+rspec
